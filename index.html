@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sharing Portal - CALO VLAN97</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .icon {
+            font-size: 1.2em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .card-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+
+        .step {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .step h3 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .link-box {
+            background: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 8px 0;
+            border-left: 4px solid #48bb78;
+            font-weight: bold;
+        }
+
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .feature-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        .feature-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .feature-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .settings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .settings-table th {
+            background: #48bb78;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .settings-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .settings-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-list li {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f0fff4;
+            border-radius: 8px;
+            border-left: 4px solid #48bb78;
+        }
+
+        .tips-list li:before {
+            content: "✓ ";
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .warning-box {
+            background: #fff5f5;
+            border-left: 4px solid #fc8181;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .help-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .help-box h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .contact {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .highlight {
+            background: #fef5e7;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #d68910;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+                flex-direction: column;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .feature-table, .settings-table {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                <span class="icon">📘</span>
+                Welcome to the File Sharing Portal
+            </h1>
+            <p class="subtitle">
+                Upload, download, and manage files securely — just like Dropbox, but hosted in <strong>CALO VLAN97</strong>
+            </p>
+        </header>
+
+        <div class="content-grid">
+            <!-- Web Browser Access -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-size: 2em;">🌐</span>
+                    <h2>Access from a Web Browser</h2>
+                </div>
+
+                <div class="step">
+                    <h3>🔹 Step 1: Open the Portal</h3>
+                    <p>Go to one of the following links depending on your setup:</p>
+                    <div class="link-box">
+                        <strong>Secure:</strong> https://10.127.197.98
+                    </div>
+                    <div class="link-box">
+                        <strong>Non-secure:</strong> http://10.127.197.98
+                    </div>
+                    <p style="margin-top: 10px; color: #666;">💡 You can open this link from any computer on the same network.</p>
+                </div>
+
+                <div class="step">
+                    <h3>🔹 Step 2: Log In</h3>
+                    <p>When asked for credentials, use:</p>
+                    <div class="code-block">
+Username: aaa-tac<br>
+Password: duck-calo
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3>🔹 Step 3: Manage Your Files</h3>
+                    <p>Once logged in, you can perform the following actions:</p>
+                    
+                    <table class="feature-table">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>📤 Upload Files</td>
+                                <td>Drag & drop files or click Upload</td>
+                            </tr>
+                            <tr>
+                                <td>🗂️ Create Folder</td>
+                                <td>Click the New Folder icon and type a name</td>
+                            </tr>
+                            <tr>
+                                <td>✏️ Rename</td>
+                                <td>Select a file/folder → click Rename</td>
+                            </tr>
+                            <tr>
+                                <td>❌ Delete</td>
+                                <td>Select → click Delete</td>
+                            </tr>
+                            <tr>
+                                <td>📥 Download</td>
+                                <td>Click the Download icon beside any file</td>
+                            </tr>
+                            <tr>
+                                <td>🔢 MD5 Checksum</td>
+                                <td>Click MD5 to view or verify file integrity</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p style="background: #e6fffa; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        Everything you upload is stored securely in the central storage (<span class="highlight">C:\files</span> on the server). 
+                        You'll see the same contents even if you log in from another PC.
+                    </p>
+                </div>
+            </div>
+
+            <!-- SFTP Access -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-size: 2em;">🔐</span>
+                    <h2>Access via SFTP (Optional)</h2>
+                </div>
+
+                <p style="margin-bottom: 20px;">
+                    If you prefer to use a file manager like <strong>WinSCP</strong>, <strong>FileZilla</strong>, or <strong>Cyberduck</strong>, 
+                    you can connect directly to the same storage area using SFTP.
+                </p>
+
+                <h3 style="color: #764ba2; margin-bottom: 15px;">Connection Details</h3>
+
+                <table class="settings-table">
+                    <tbody>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Server / Hostname</strong></td>
+                            <td>(Ask your admin for your PC name or IP)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Port</strong></td>
+                            <td>22</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Username</strong></td>
+                            <td>aaa-tac</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Password</strong></td>
+                            <td>duck-calo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Protocol</strong></td>
+                            <td>SFTP (SSH File Transfer Protocol)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Root Folder</strong></td>
+                            <td>You'll automatically see shared files here</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="background: #f0fff4; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #48bb78;">
+                    Once connected, you can drag-and-drop files just like any cloud drive.
+                </p>
+            </div>
+
+            <!-- Tips -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-size: 2em;">💡</span>
+                    <h2>Tips</h2>
+                </div>
+
+                <ul class="tips-list">
+                    <li>Multiple users can log in at the same time using the same credentials</li>
+                    <li>Large files are supported — no size limits</li>
+                    <li>Uploads can be canceled mid-way; partially uploaded files are automatically removed</li>
+                    <li>The system shows upload speed and progress</li>
+                    <li>For quick sharing, you can leave the browser open — files are saved instantly</li>
+                </ul>
+            </div>
+
+            <!-- Notes -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-size: 2em;">⚠️</span>
+                    <h2>Important Notes</h2>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️</strong> Do not rename or delete other users' files unless authorized
+                </div>
+                <div class="warning-box">
+                    <strong>⚠️</strong> Only the folder contents are visible — system folders are hidden
+                </div>
+                <div class="warning-box">
+                    <strong>⚠️</strong> Use modern browsers like Chrome, Edge, or Firefox for the best experience
+                </div>
+                <div class="warning-box">
+                    <strong>⚠️</strong> HTTPS ensures your connection is secure (if available)
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Section -->
+        <div class="help-box">
+            <h3>💬 Need Help?</h3>
+            <p>If you have trouble logging in or accessing files:</p>
+            <div class="contact">
+                Contact <strong>basantku</strong> on Webex Chat
+            </div>
+        </div>
+    </div>
+</body>
+</html>
